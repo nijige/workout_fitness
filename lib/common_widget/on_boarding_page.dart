@@ -1,18 +1,17 @@
-
 import 'package:flutter/material.dart';
 
 import '../common/colo_extension.dart';
 
 class OnBoardingPage extends StatelessWidget {
   final Map pObj;
-  const OnBoardingPage({super.key, required this.pObj});
+
+  // Remova o parâmetro 'required double imageSize' do construtor
+  const OnBoardingPage({Key? key, required this.pObj});
 
   @override
   Widget build(BuildContext context) {
-     var media = MediaQuery.of(context).size;
-    return 
-    
-    SizedBox(
+    var media = MediaQuery.of(context).size;
+    return SizedBox(
       width: media.width,
       height: media.height,
       child: Column(

@@ -43,25 +43,25 @@ class _ResultViewState extends State<ResultView> {
 
   List statArr = [
     {
-      "title": "Lose Weight",
+      "title": "Perda de Peso",
       "diff_per": "33",
       "month_1_per": "33%",
       "month_2_per": "67%",
     },
     {
-      "title": "Height Increase",
+      "title": "Aumento de Altura",
       "diff_per": "88",
       "month_1_per": "88%",
       "month_2_per": "12%",
     },
     {
-      "title": "Muscle Mass Increase",
+      "title": "Aumento de Massa Muscular",
       "diff_per": "57",
       "month_1_per": "57%",
       "month_2_per": "43%",
     },
     {
-      "title": "Abs",
+      "title": "Abdominais",
       "diff_per": "89",
       "month_1_per": "89%",
       "month_2_per": "11%",
@@ -559,20 +559,20 @@ class _ResultViewState extends State<ResultView> {
                                             color: TColor.gray, fontSize: 12),
                                       ),
                                     ),
-
                                     SimpleAnimationProgressBar(
-                          height: 10,
-                          width: media.width - 120,
-                          backgroundColor: TColor.primaryColor1,
-                          foregrondColor: const Color(0xffFFB2B1) ,
-                          ratio: (double.tryParse(iObj["diff_per"].toString()) ?? 0.0) / 100.0 ,
-                          direction: Axis.horizontal,
-                          curve: Curves.fastLinearToSlowEaseIn,
-                          duration: const Duration(seconds: 3),
-                          borderRadius: BorderRadius.circular(5),
-                          
-                        ),
-
+                                      height: 10,
+                                      width: media.width - 120,
+                                      backgroundColor: TColor.primaryColor1,
+                                      foregrondColor: const Color(0xffFFB2B1),
+                                      ratio: (double.tryParse(iObj["diff_per"]
+                                                  .toString()) ??
+                                              0.0) /
+                                          100.0,
+                                      direction: Axis.horizontal,
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      duration: const Duration(seconds: 3),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
                                     SizedBox(
                                       width: 25,
                                       child: Text(
@@ -588,7 +588,6 @@ class _ResultViewState extends State<ResultView> {
                                 )
                               ]);
                         }),
-                 
                     RoundButton(
                         title: "Back to Home",
                         onPressed: () {

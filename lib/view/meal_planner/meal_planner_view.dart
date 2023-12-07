@@ -9,7 +9,7 @@ import 'meal_food_details_view.dart';
 import 'meal_schedule_view.dart';
 
 class MealPlannerView extends StatefulWidget {
-  const MealPlannerView({super.key});
+  const MealPlannerView({Key? key}) : super(key: key);
 
   @override
   State<MealPlannerView> createState() => _MealPlannerViewState();
@@ -114,153 +114,98 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                             fontWeight: FontWeight.w700),
                       ),
                       Container(
-                          height: 30,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: TColor.primaryG),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              items: ["Weekly", "Monthly"]
-                                  .map((name) => DropdownMenuItem(
-                                        value: name,
-                                        child: Text(
-                                          name,
-                                          style: TextStyle(
-                                              color: TColor.gray, fontSize: 14),
-                                        ),
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {},
-                              icon:
-                                  Icon(Icons.expand_more, color: TColor.white),
-                              hint: Text(
-                                "Weekly",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: TColor.white, fontSize: 12),
-                              ),
+                        height: 30,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: TColor.primaryG),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            items: ["Weekly", "Monthly"]
+                                .map((name) => DropdownMenuItem(
+                                      value: name,
+                                      child: Text(
+                                        name,
+                                        style: TextStyle(
+                                            color: TColor.gray, fontSize: 14),
+                                      ),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {},
+                            icon: Icon(Icons.expand_more, color: TColor.white),
+                            hint: Text(
+                              "Weekly",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: TColor.white, fontSize: 12),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
                     height: media.width * 0.05,
                   ),
                   Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      height: media.width * 0.5,
-                      width: double.maxFinite,
-                      child: LineChart(
-                        LineChartData(
-                          // showingTooltipIndicators:
-                          //     showingTooltipOnSpots.map((index) {
-                          //   return ShowingTooltipIndicators([
-                          //     LineBarSpot(
-                          //       tooltipsOnBar,
-                          //       lineBarsData.indexOf(tooltipsOnBar),
-                          //       tooltipsOnBar.spots[index],
-                          //     ),
-                          //   ]);
-                          // }).toList(),
-                          lineTouchData: LineTouchData(
-                            enabled: true,
-                            handleBuiltInTouches: false,
-                            touchCallback: (FlTouchEvent event,
-                                LineTouchResponse? response) {
-                              // if (response == null || response.lineBarSpots == null) {
-                              //   return;
-                              // }
-                              // if (event is FlTapUpEvent) {
-                              //   final spotIndex =
-                              //       response.lineBarSpots!.first.spotIndex;
-                              //   showingTooltipOnSpots.clear();
-                              //   setState(() {
-                              //     showingTooltipOnSpots.add(spotIndex);
-                              //   });
-                              // }
-                            },
-                            mouseCursorResolver: (FlTouchEvent event,
-                                LineTouchResponse? response) {
-                              if (response == null ||
-                                  response.lineBarSpots == null) {
-                                return SystemMouseCursors.basic;
-                              }
-                              return SystemMouseCursors.click;
-                            },
-                            getTouchedSpotIndicator: (LineChartBarData barData,
-                                List<int> spotIndexes) {
-                              return spotIndexes.map((index) {
-                                return TouchedSpotIndicatorData(
-                                  FlLine(
-                                    color: Colors.transparent,
-                                  ),
-                                  FlDotData(
-                                    show: true,
-                                    getDotPainter:
-                                        (spot, percent, barData, index) =>
-                                            FlDotCirclePainter(
-                                      radius: 3,
-                                      color: Colors.white,
-                                      strokeWidth: 3,
-                                      strokeColor: TColor.secondaryColor1,
-                                    ),
+                    padding: const EdgeInsets.only(left: 15),
+                    height: media.width * 0.5,
+                    width: double.maxFinite,
+                    child: LineChart(
+                      LineChartData(
+                        lineTouchData: LineTouchData(
+                          touchTooltipData: LineTouchTooltipData(
+                            tooltipBgColor: TColor.secondaryColor1,
+                            tooltipRoundedRadius: 20,
+                            getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+                              return lineBarsSpot.map((lineBarSpot) {
+                                return LineTooltipItem(
+                                  "${lineBarSpot.x.toInt()} mins ago",
+                                  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 );
                               }).toList();
                             },
-                            touchTooltipData: LineTouchTooltipData(
-                              tooltipBgColor: TColor.secondaryColor1,
-                              tooltipRoundedRadius: 20,
-                              getTooltipItems:
-                                  (List<LineBarSpot> lineBarsSpot) {
-                                return lineBarsSpot.map((lineBarSpot) {
-                                  return LineTooltipItem(
-                                    "${lineBarSpot.x.toInt()} mins ago",
-                                    const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  );
-                                }).toList();
-                              },
-                            ),
-                          ),
-                          lineBarsData: lineBarsData1,
-                          minY: -0.5,
-                          maxY: 110,
-                          titlesData: FlTitlesData(
-                              show: true,
-                              leftTitles: AxisTitles(),
-                              topTitles: AxisTitles(),
-                              bottomTitles: AxisTitles(
-                                sideTitles: bottomTitles,
-                              ),
-                              rightTitles: AxisTitles(
-                                sideTitles: rightTitles,
-                              )),
-                          gridData: FlGridData(
-                            show: true,
-                            drawHorizontalLine: true,
-                            horizontalInterval: 25,
-                            drawVerticalLine: false,
-                            getDrawingHorizontalLine: (value) {
-                              return FlLine(
-                                color: TColor.gray.withOpacity(0.15),
-                                strokeWidth: 2,
-                              );
-                            },
-                          ),
-                          borderData: FlBorderData(
-                            show: true,
-                            border: Border.all(
-                              color: Colors.transparent,
-                            ),
                           ),
                         ),
-                      )),
+                        lineBarsData: lineBarsData1,
+                        minY: -0.5,
+                        maxY: 110,
+                        titlesData: FlTitlesData(
+                            show: true,
+                            leftTitles: AxisTitles(),
+                            topTitles: AxisTitles(),
+                            bottomTitles: AxisTitles(
+                              sideTitles: bottomTitles,
+                            ),
+                            rightTitles: AxisTitles(
+                              sideTitles: rightTitles,
+                            )),
+                        gridData: FlGridData(
+                          show: true,
+                          drawHorizontalLine: true,
+                          horizontalInterval: 25,
+                          drawVerticalLine: false,
+                          getDrawingHorizontalLine: (value) {
+                            return FlLine(
+                              color: TColor.gray.withOpacity(0.15),
+                              strokeWidth: 2,
+                            );
+                          },
+                        ),
+                        borderData: FlBorderData(
+                          show: true,
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: media.width * 0.05,
                   ),
@@ -290,7 +235,7 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             onPressed: () {
-                               Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -317,57 +262,58 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                             fontWeight: FontWeight.w700),
                       ),
                       Container(
-                          height: 30,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: TColor.primaryG),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              items: [
-                                "Breakfast",
-                                "Lunch",
-                                "Dinner",
-                                "Snack",
-                                "Dessert"
-                              ]
-                                  .map((name) => DropdownMenuItem(
-                                        value: name,
-                                        child: Text(
-                                          name,
-                                          style: TextStyle(
-                                              color: TColor.gray, fontSize: 14),
-                                        ),
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {},
-                              icon:
-                                  Icon(Icons.expand_more, color: TColor.white),
-                              hint: Text(
-                                "Breakfast",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: TColor.white, fontSize: 12),
-                              ),
+                        height: 30,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: TColor.primaryG),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            items: [
+                              "Breakfast",
+                              "Lunch",
+                              "Dinner",
+                              "Snack",
+                              "Dessert"
+                            ]
+                                .map((name) => DropdownMenuItem(
+                                      value: name,
+                                      child: Text(
+                                        name,
+                                        style: TextStyle(
+                                            color: TColor.gray, fontSize: 14),
+                                      ),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {},
+                            icon: Icon(Icons.expand_more, color: TColor.white),
+                            hint: Text(
+                              "Breakfast",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: TColor.white, fontSize: 12),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
                     height: media.width * 0.05,
                   ),
                   ListView.builder(
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: todayMealArr.length,
-                      itemBuilder: (context, index) {
-                        var mObj = todayMealArr[index] as Map? ?? {};
-                        return TodayMealRow(
-                          mObj: mObj,
-                        );
-                      }),
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: todayMealArr.length,
+                    itemBuilder: (context, index) {
+                      var mObj = todayMealArr[index] as Map? ?? {};
+                      return TodayMealRow(
+                        mObj: mObj,
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -384,21 +330,27 @@ class _MealPlannerViewState extends State<MealPlannerView> {
             SizedBox(
               height: media.width * 0.55,
               child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: findEatArr.length,
-                  itemBuilder: (context, index) {
-                    var fObj = findEatArr[index] as Map? ?? {};
-                    return InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MealFoodDetailsView(eObj: fObj) ) );
-                      },
-                      child: FindEatCell(
-                        fObj: fObj,
-                        index: index,
-                      ),
-                    );
-                  }),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                scrollDirection: Axis.horizontal,
+                itemCount: findEatArr.length,
+                itemBuilder: (context, index) {
+                  var fObj = findEatArr[index] as Map? ?? {};
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MealFoodDetailsView(eObj: fObj),
+                        ),
+                      );
+                    },
+                    child: FindEatCell(
+                      fObj: fObj,
+                      index: index,
+                    ),
+                  );
+                },
+              ),
             ),
             SizedBox(
               height: media.width * 0.05,

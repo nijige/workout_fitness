@@ -1,16 +1,16 @@
-import 'package:workout_app/common/colo_extension.dart';
-import 'package:workout_app/common_widget/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
-
+import 'package:workout_app/common/colo_extension.dart';
+import 'package:workout_app/common_widget/round_button.dart';
 import '../../common_widget/food_step_detail_row.dart';
 import 'meal_schedule_view.dart';
 
 class FoodInfoDetailsView extends StatefulWidget {
   final Map mObj;
   final Map dObj;
-  const FoodInfoDetailsView(
-      {super.key, required this.dObj, required this.mObj});
+
+  const FoodInfoDetailsView({Key? key, required this.dObj, required this.mObj})
+      : super(key: key);
 
   @override
   State<FoodInfoDetailsView> createState() => _FoodInfoDetailsViewState();
@@ -45,12 +45,12 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
     {
       "no": "3",
       "detail":
-          "In a seperate place, mix the eggs and liquid milk until blended"
+          "In a separate place, mix the eggs and liquid milk until blended"
     },
     {
       "no": "4",
       "detail":
-          "Put the egg and milk mixture into the dry ingredients, Stir untul smooth and smooth"
+          "Put the egg and milk mixture into the dry ingredients, Stir until smooth and smooth"
     },
     {"no": "5", "detail": "Prepare all of the ingredients that needed"},
   ];

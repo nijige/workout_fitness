@@ -1,15 +1,14 @@
-import 'package:workout_app/common_widget/meal_recommed_cell.dart';
 import 'package:flutter/material.dart';
-
-import '../../common/colo_extension.dart';
-import '../../common_widget/meal_category_cell.dart';
-import '../../common_widget/popular_meal_row.dart';
-import '../../common_widget/today_meal_row.dart';
+import 'package:workout_app/common/colo_extension.dart';
+import 'package:workout_app/common_widget/meal_recommed_cell.dart';
+import 'package:workout_app/common_widget/meal_category_cell.dart';
+import 'package:workout_app/common_widget/popular_meal_row.dart';
+import 'package:workout_app/common_widget/today_meal_row.dart';
 import 'food_info_details_view.dart';
 
 class MealFoodDetailsView extends StatefulWidget {
   final Map eObj;
-  const MealFoodDetailsView({super.key, required this.eObj});
+  const MealFoodDetailsView({Key? key, required this.eObj}) : super(key: key);
 
   @override
   State<MealFoodDetailsView> createState() => _MealFoodDetailsViewState();
@@ -19,38 +18,14 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
   TextEditingController txtSearch = TextEditingController();
 
   List categoryArr = [
-    {
-      "name": "Salad",
-      "image": "assets/img/c_1.png",
-    },
-    {
-      "name": "Cake",
-      "image": "assets/img/c_2.png",
-    },
-    {
-      "name": "Pie",
-      "image": "assets/img/c_3.png",
-    },
-    {
-      "name": "Smoothies",
-      "image": "assets/img/c_4.png",
-    },
-    {
-      "name": "Salad",
-      "image": "assets/img/c_1.png",
-    },
-    {
-      "name": "Cake",
-      "image": "assets/img/c_2.png",
-    },
-    {
-      "name": "Pie",
-      "image": "assets/img/c_3.png",
-    },
-    {
-      "name": "Smoothies",
-      "image": "assets/img/c_4.png",
-    },
+    {"name": "Salad", "image": "assets/img/c_1.png"},
+    {"name": "Cake", "image": "assets/img/c_2.png"},
+    {"name": "Pie", "image": "assets/img/c_3.png"},
+    {"name": "Smoothies", "image": "assets/img/c_4.png"},
+    {"name": "Salad", "image": "assets/img/c_1.png"},
+    {"name": "Cake", "image": "assets/img/c_2.png"},
+    {"name": "Pie", "image": "assets/img/c_3.png"},
+    {"name": "Smoothies", "image": "assets/img/c_4.png"},
   ];
 
   List popularArr = [
@@ -164,18 +139,19 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
               child: Row(
                 children: [
                   Expanded(
-                      child: TextField(
-                    controller: txtSearch,
-                    decoration: InputDecoration(
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        prefixIcon: Image.asset(
-                          "assets/img/search.png",
-                          width: 25,
-                          height: 25,
-                        ),
-                        hintText: "Search Pancake"),
-                  )),
+                    child: TextField(
+                      controller: txtSearch,
+                      decoration: InputDecoration(
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          prefixIcon: Image.asset(
+                            "assets/img/search.png",
+                            width: 25,
+                            height: 25,
+                          ),
+                          hintText: "Search Pancake"),
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     width: 1,

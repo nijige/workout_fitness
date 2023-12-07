@@ -23,6 +23,9 @@ class _AddScheduleViewState extends State<AddScheduleView> {
   String selectedWorkout = "";
   String selectedDifficulty = "";
   String selectedTime = DateFormat('HH:mm').format(DateTime.now());
+  String selectedRepetitions = "";
+  String selectedWeights = "";
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -141,41 +144,77 @@ class _AddScheduleViewState extends State<AddScheduleView> {
             IconTitleNextRow(
                 icon: "assets/img/choose_workout.png",
                 title: "Escolher Treino",
-                time: "Upperbody",
+                time: selectedWorkout.isEmpty
+                    ? "Selecione um treino"
+                    : selectedWorkout,
                 color: TColor.lightGray,
-                onPressed: () {}),
+                onPressed: () async {
+                  final selected = await selectWorkout(context);
+                  if (selected != null) {
+                    setState(() {
+                      selectedWorkout = selected;
+                    });
+                  }
+                }),
             const SizedBox(
               height: 10,
             ),
             IconTitleNextRow(
                 icon: "assets/img/difficulity.png",
                 title: "Dificuldade",
-                time: "Iniciante",
+                time: selectedDifficulty.isEmpty
+                    ? "Selecione a dificuldade"
+                    : selectedDifficulty,
                 color: TColor.lightGray,
-                onPressed: () {}),
+                onPressed: () async {
+                  final selected = await selectDifficulty(context);
+                  if (selected != null) {
+                    setState(() {
+                      selectedDifficulty = selected;
+                    });
+                  }
+                }),
             const SizedBox(
               height: 10,
             ),
             IconTitleNextRow(
                 icon: "assets/img/repetitions.png",
                 title: "Repetições Personalizadas",
-                time: "",
+                time: selectedRepetitions.isEmpty
+                    ? "Selecione as repetições"
+                    : selectedRepetitions,
                 color: TColor.lightGray,
-                onPressed: () {}),
+                onPressed: () async {
+                  final selected = await customizeRepetitions(context);
+                  if (selected != null) {
+                    setState(() {
+                      selectedRepetitions = selected;
+                    });
+                  }
+                }),
             const SizedBox(
               height: 10,
             ),
             IconTitleNextRow(
                 icon: "assets/img/repetitions.png",
                 title: "Pesos Personalizados",
-                time: "",
+                time: selectedWeights.isEmpty
+                    ? "Selecione os pesos"
+                    : selectedWeights,
                 color: TColor.lightGray,
-                onPressed: () {}),
+                onPressed: () async {
+                  final selected = await customizeWeights(context);
+                  if (selected != null) {
+                    setState(() {
+                      selectedWeights = selected;
+                    });
+                  }
+                }),
             Spacer(),
             RoundButton(
                 title: "Salvar",
                 onPressed: () {
-                  userSchedule();
+                  userSchedule(context);
                 }),
             const SizedBox(
               height: 20,
@@ -186,31 +225,140 @@ class _AddScheduleViewState extends State<AddScheduleView> {
     );
   }
 
-  void userSchedule() async {
-    if (selectedTime.isEmpty ||
-        selectedWorkout.isEmpty ||
-        selectedDifficulty.isEmpty) {
-      // Certifique-se de que todos os campos obrigatórios estão preenchidos.
-      print("Preencha todos os campos obrigatórios.");
-      return;
-    }
+  Future<String?> selectWorkout(BuildContext context) async {
+    List<String> workouts = ["Treino 1", "Treino 2", "Treino 3"];
+    return await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Selecione um treino'),
+          children: workouts
+              .map((workout) => SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context, workout);
+                    },
+                    child: Text(workout),
+                  ))
+              .toList(),
+        );
+      },
+    );
+  }
 
-    Map<String, dynamic> schedule = {
-      'date': dateToString(widget.date, formatStr: "E, dd MMMM yyyy"),
-      'time': selectedTime,
-      'workout': selectedWorkout,
-      'difficulty': selectedDifficulty,
-      'repetitions': '', // Adicione a lógica para obter as repetições.
-      'weights': '', // Adicione a lógica para obter os pesos.
-    };
+  Future<String?> selectDifficulty(BuildContext context) async {
+    List<String> difficulties = ["Fácil", "Médio", "Difícil"];
+    return await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Selecione a dificuldade'),
+          children: difficulties
+              .map((difficulty) => SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context, difficulty);
+                    },
+                    child: Text(difficulty),
+                  ))
+              .toList(),
+        );
+      },
+    );
+  }
 
-    int result = await dbHelper.insertSchedule(schedule);
-    if (result != -1) {
-      // O agendamento foi salvo com sucesso.
-      //Navigator.pop(context);
-    } else {
-      // Ocorreu um erro ao salvar o agendamento.
-      print('Erro ao salvar o agendamento');
+  Future<String?> customizeRepetitions(BuildContext context) async {
+    return await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Repetições Personalizadas'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Digite as repetições'),
+            onChanged: (value) {
+              // Pode usar o valor digitado conforme necessário.
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'Repetições: ${controller.text}');
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String?> customizeWeights(BuildContext context) async {
+    return await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Pesos Personalizados'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Digite os pesos'),
+            onChanged: (value) {
+              // Pode usar o valor digitado conforme necessário.
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'Pesos: ${controller.text}');
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void userSchedule(BuildContext context) async {
+    try {
+      if (selectedTime.isEmpty ||
+          selectedWorkout.isEmpty ||
+          selectedDifficulty.isEmpty) {
+        print("Preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      Map<String, dynamic> schedule = {
+        'date': dateToString(widget.date, formatStr: "E, dd MMMM yyyy"),
+        'time': selectedTime,
+        'workout': selectedWorkout,
+        'difficulty': selectedDifficulty,
+        'repetitions': selectedRepetitions,
+        'weights': selectedWeights,
+      };
+
+      int result = await dbHelper.insertSchedule(schedule);
+
+      print('Resultado da inserção: $result');
+
+      if (result != -1) {
+        print('Agendamento salvo com sucesso.');
+        Navigator.pop(context);
+      } else {
+        print('Erro ao salvar o agendamento.');
+      }
+    } catch (e) {
+      print('Erro: $e');
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+import 'package:workout_app/models/auth_service.dart';
 import '../../common/colo_extension.dart';
 import 'activity_tracker_view.dart';
 import 'finished_workout_view.dart';
@@ -18,23 +19,25 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final AuthService _authService = AuthService();
+
   List lastWorkoutArr = [
     {
-      "name": "Full Body Workout",
+      "name": "Treino de corpo inteiro",
       "image": "assets/img/Workout1.png",
       "kcal": "180",
       "time": "20",
       "progress": 0.3
     },
     {
-      "name": "Lower Body Workout",
+      "name": "Treino para parte inferior do corpo",
       "image": "assets/img/Workout2.png",
       "kcal": "200",
       "time": "30",
       "progress": 0.4
     },
     {
-      "name": "Ab Workout",
+      "name": "Treino abdominal",
       "image": "assets/img/Workout3.png",
       "kcal": "300",
       "time": "40",
@@ -88,6 +91,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
+    User? loggedInUser = _authService.getLoggedInUser();
 
     final lineBarsData = [
       LineChartBarData(
@@ -130,8 +134,9 @@ class _HomeViewState extends State<HomeView> {
                           "Bem Vindo,",
                           style: TextStyle(color: TColor.gray, fontSize: 12),
                         ),
+                        // Exibe o nome do usuário logado dinamicamente.
                         Text(
-                          "Geane ferreira ",
+                          loggedInUser?.displayName ?? 'Convidado',
                           style: TextStyle(
                               color: TColor.black,
                               fontSize: 20,
@@ -140,20 +145,21 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                     IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NotificationView(),
-                            ),
-                          );
-                        },
-                        icon: Image.asset(
-                          "assets/img/notification_active.png",
-                          width: 25,
-                          height: 25,
-                          fit: BoxFit.fitHeight,
-                        ))
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationView(),
+                          ),
+                        );
+                      },
+                      icon: Image.asset(
+                        "assets/img/notification_active.png",
+                        width: 25,
+                        height: 25,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(

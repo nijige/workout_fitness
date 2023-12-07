@@ -5,16 +5,16 @@ import '../../common_widget/round_button.dart';
 import 'comparison_view.dart';
 
 class PhotoProgressView extends StatefulWidget {
-  const PhotoProgressView({super.key});
+  const PhotoProgressView({Key? key}) : super(key: key);
 
   @override
   State<PhotoProgressView> createState() => _PhotoProgressViewState();
 }
 
 class _PhotoProgressViewState extends State<PhotoProgressView> {
-  List photoArr = [
+  List<Map<String, dynamic>> photoArr = [
     {
-      "time": "2 June",
+      "time": "2 de junho",
       "photo": [
         "assets/img/pp_1.png",
         "assets/img/pp_2.png",
@@ -23,7 +23,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
       ]
     },
     {
-      "time": "5 May",
+      "time": "5 de maio",
       "photo": [
         "assets/img/pp_5.png",
         "assets/img/pp_6.png",
@@ -44,7 +44,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
         leadingWidth: 0,
         leading: const SizedBox(),
         title: Text(
-          "Progress Photo",
+          "Progresso Fotográfico",
           style: TextStyle(
               color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
@@ -109,14 +109,14 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Reminder!",
+                                  "Lembrete!",
                                   style: TextStyle(
                                       color: Colors.red,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "Next Photos Fall On July 08",
+                                  "Próximas Fotos em 8 de Julho",
                                   style: TextStyle(
                                       color: TColor.black,
                                       fontSize: 14,
@@ -161,7 +161,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                                 height: 15,
                               ),
                               Text(
-                                "Track Your Progress Each\nMonth With Photo",
+                                "Acompanhe seu Progresso Cada\nMês com Fotos",
                                 style: TextStyle(
                                   color: TColor.black,
                                   fontSize: 12,
@@ -172,7 +172,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                                 width: 110,
                                 height: 35,
                                 child: RoundButton(
-                                    title: "Learn More",
+                                    title: "Saiba Mais",
                                     fontSize: 12,
                                     onPressed: () {}),
                               )
@@ -200,7 +200,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Compare my Photo",
+                        "Comparar Minhas Fotos",
                         style: TextStyle(
                             color: TColor.black,
                             fontSize: 14,
@@ -210,7 +210,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                         width: 100,
                         height: 25,
                         child: RoundButton(
-                          title: "Compare",
+                          title: "Comparar",
                           type: RoundButtonType.bgGradient,
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -218,8 +218,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const ComparisonView(),
+                                builder: (context) => const ComparisonView(),
                               ),
                             );
                           },
@@ -235,7 +234,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Gallery",
+                        "Galeria",
                         style: TextStyle(
                             color: TColor.black,
                             fontSize: 16,
@@ -244,7 +243,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                       TextButton(
                           onPressed: () {},
                           child: Text(
-                            "See more",
+                            "Ver mais",
                             style: TextStyle(color: TColor.gray, fontSize: 12),
                           ))
                     ],
@@ -256,8 +255,8 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                     shrinkWrap: true,
                     itemCount: photoArr.length,
                     itemBuilder: ((context, index) {
-                      var pObj = photoArr[index] as Map? ?? {};
-                      var imaArr = pObj["photo"] as List? ?? [];
+                      var pObj = photoArr[index] ?? {};
+                      var imaArr = pObj["photo"] ?? [];
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,7 +287,7 @@ class _PhotoProgressViewState extends State<PhotoProgressView> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.asset(
-                                      imaArr[indexRow] as String? ?? "",
+                                      imaArr[indexRow] ?? "",
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,

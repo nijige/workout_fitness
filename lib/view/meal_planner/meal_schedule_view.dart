@@ -1,5 +1,5 @@
-import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:flutter/material.dart';
+import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 import '../../common/colo_extension.dart';
@@ -7,7 +7,7 @@ import '../../common_widget/meal_food_schedule_row.dart';
 import '../../common_widget/nutritions_row.dart';
 
 class MealScheduleView extends StatefulWidget {
-  const MealScheduleView({super.key});
+  const MealScheduleView({Key? key}) : super(key: key);
 
   @override
   State<MealScheduleView> createState() => _MealScheduleViewState();
