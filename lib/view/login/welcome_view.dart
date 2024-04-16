@@ -39,7 +39,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                 future: _getUserName(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text("Erro: ${snapshot.error}");
                   } else {

@@ -112,20 +112,6 @@ class _WhatYourGoalViewState extends State<WhatYourGoalView> {
     );
   }
 
-  Widget _buildRoundButton(BuildContext context) {
-    return RoundButton(
-      title: "Confirmar",
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const WelcomeView(),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildButtonContainer(BuildContext context, Size media) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -137,4 +123,18 @@ class _WhatYourGoalViewState extends State<WhatYourGoalView> {
       ),
     );
   }
+}
+
+Widget _buildRoundButton(BuildContext context) {
+  return RoundButton(
+    title: "Confirmar",
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WelcomeView(),
+        ),
+      );
+    },
+  );
 }
